@@ -24,32 +24,40 @@ export default function Register() {
   })
 
   return (
-    <div>
-      <h1>ユーザー登録</h1>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <TextField
-          label="メールアドレス"
-          type="email"
-          size={'small'}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          sx={{ mt: 2 }}
-          label="パスワード"
-          type="password"
-          size={'small'}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          sx={{ mt: 2 }}
-          variant="contained"
-          onClick={() => {
-            registerMutation.mutate({ email, password })
-          }}
-        >
-          登録
-        </Button>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Box sx={{ mt: 5 }}>
+        <h1>ユーザー登録</h1>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <TextField
+            label="メールアドレス"
+            type="email"
+            size={'small'}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            sx={{ mt: 2 }}
+            label="パスワード"
+            type="password"
+            size={'small'}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            sx={{ mt: 2 }}
+            variant="contained"
+            onClick={() => {
+              registerMutation.mutate({ email, password })
+            }}
+          >
+            登録
+          </Button>
+        </Box>
       </Box>
-    </div>
+    </Box>
   )
 }
