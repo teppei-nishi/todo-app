@@ -1,17 +1,27 @@
+'use client'
+
 import React from 'react'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import axios from 'axios'
+import { useMutation } from '@tanstack/react-query'
+
+type Credentials = {
+  email: string
+  password: string
+}
 
 export default function Register() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 
-  async function register() {
-    const { data } = await axios.post('/api/register', { email, password })
-    console.log('register', data)
-  }
+  const registerMutation = useMutation({
+    mutationFn: async (credentials: Credentials) => {
+      const response = await axios.post('/api/register', credentials)
+      return response.data
+    },
+  })
 
   return (
     <div>
@@ -30,7 +40,13 @@ export default function Register() {
           size={'small'}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button sx={{ mt: 2 }} variant="contained" onClick={register}>
+        <Button
+          sx={{ mt: 2 }}
+          variant="contained"
+          onClick={() => {
+            registerMutation.mutate({ email, password })
+          }}
+        >
           登録
         </Button>
       </Box>
