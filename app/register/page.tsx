@@ -4,22 +4,31 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
+import { Typography } from '@mui/material'
 
 type Credentials = {
   email: string
   password: string
 }
 
+const register = async (credentials: Credentials) => {
+  const response = await axios.post('/api/register', credentials)
+  return response.data
+}
+
 export default function Register() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [error, setError] = React.useState('')
 
   const registerMutation = useMutation({
-    mutationFn: async (credentials: Credentials) => {
-      const response = await axios.post('/api/register', credentials)
-      return response.data
+    mutationFn: register,
+    onError: (error: AxiosError<{ message: string }>) => {
+      if (error.response) {
+        setError(error.response.data.message)
+      }
     },
   })
 
@@ -29,6 +38,7 @@ export default function Register() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
       }}
     >
       <Box sx={{ mt: 5 }}>
@@ -58,6 +68,13 @@ export default function Register() {
           </Button>
         </Box>
       </Box>
+      {error && (
+        <Typography
+          style={{ color: 'red' }}
+          sx={{ mt: 2 }}
+          dangerouslySetInnerHTML={{ __html: error }}
+        />
+      )}
     </Box>
   )
 }

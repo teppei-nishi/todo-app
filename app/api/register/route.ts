@@ -28,7 +28,11 @@ export async function POST(request: Request) {
 
   if (!result.success) {
     return NextResponse.json(
-      { message: result.error.issues.map((issue) => issue.message).join('\n') },
+      {
+        message: result.error.issues
+          .map((issue) => issue.message)
+          .join('<br />'),
+      },
       { status: 400 }
     )
   }
