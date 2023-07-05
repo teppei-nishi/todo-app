@@ -1,13 +1,12 @@
 'use client'
 import { AppBar, Toolbar } from '@mui/material'
 import { FC, ReactNode } from 'react'
+import { GlobalHeader } from './GlobalHeader'
 
 export const App: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>
-      <AppBar>
-        <Toolbar>Todo App</Toolbar>
-      </AppBar>
+      <GlobalHeader />
       <main>
         <Toolbar />
         {children}
