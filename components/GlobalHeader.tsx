@@ -1,18 +1,12 @@
 'use client'
-import {
-  AppBar,
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from '@mui/material'
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import Link from 'next/link'
 import { FC } from 'react'
 
-const navItems = ['ユーザー登録']
+const navItems = [
+  { text: 'ログイン', href: '/' },
+  { text: 'ユーザー登録', href: '/register' },
+]
 
 export const GlobalHeader: FC = () => {
   return (
@@ -20,19 +14,18 @@ export const GlobalHeader: FC = () => {
       <AppBar>
         <Toolbar>
           <Typography sx={{ flexGrow: 1 }}>Todo App</Typography>
-          <List>
+          <Box>
             {navItems.map((item) => (
-              <ListItem key={item} disablePadding>
-                <ListItemButton
-                  sx={{ textAlign: 'center' }}
-                  component={Link}
-                  href="/register"
-                >
-                  <ListItemText primary={item} />
-                </ListItemButton>
-              </ListItem>
+              <Button
+                key={item.text}
+                sx={{ color: 'inherit' }}
+                component={Link}
+                href={item.href}
+              >
+                {item.text}
+              </Button>
             ))}
-          </List>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
