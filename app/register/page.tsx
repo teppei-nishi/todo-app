@@ -1,6 +1,5 @@
 'use client'
-
-import React from 'react'
+import { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -19,9 +18,9 @@ const register = async (credentials: Credentials) => {
 }
 
 export default function Register() {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [error, setError] = React.useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const registerMutation = useMutation({
     mutationFn: register,
