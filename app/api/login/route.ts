@@ -38,14 +38,33 @@ export async function POST(request: Request) {
   }
 
   try {
-    await prisma.user.create({
-      data: body,
+    const user = await prisma.user.findUnique({
+      where: {
+        email: body.email,
+      },
     })
-    return NextResponse.json({ message: '登録しました。' })
+
+    if (!user) {
+      return NextResponse.json(
+        { message: 'メールアドレスかパスワードが間違っています。' },
+        { status: 401 }
+      )
+    }
+
+    if (user.password !== body.password) {
+      return NextResponse.json(
+        { message: 'メールアドレスかパスワードが間違っています。' },
+        { status: 401 }
+      )
+    }
+
+    return NextResponse.json({
+      user: { id: user.id, email: user.email },
+    })
   } catch (error) {
     console.error(error)
     return NextResponse.json(
-      { message: '登録できませんでした。' },
+      { message: 'ログインできませんでした。' },
       { status: 400 }
     )
   }
