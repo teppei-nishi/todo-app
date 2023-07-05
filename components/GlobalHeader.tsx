@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 
 const navItems = [
-  { text: 'ログイン', href: '/' },
+  { text: 'ログイン', href: '/login' },
   { text: 'ユーザー登録', href: '/register' },
 ]
 
