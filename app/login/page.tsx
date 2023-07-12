@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import axios, { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
-import { AppBar, Card, Toolbar, Typography } from '@mui/material'
+import { AppBar, Card, FormControl, Toolbar, Typography } from '@mui/material'
 
 type Credentials = {
   email: string
@@ -44,7 +44,7 @@ export default function Login() {
         <AppBar position="static" elevation={0}>
           <Toolbar>ログイン</Toolbar>
         </AppBar>
-        <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
+        <FormControl sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
           <TextField
             label="メールアドレス"
             type="email"
@@ -67,7 +67,7 @@ export default function Login() {
           >
             ログイン
           </Button>
-        </Box>
+        </FormControl>
       </Card>
       {error && (
         <Typography
