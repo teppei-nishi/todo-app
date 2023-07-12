@@ -1,11 +1,12 @@
 'use client'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import axios, { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
 import { AppBar, Card, FormControl, Toolbar, Typography } from '@mui/material'
+import { StoreContext } from '../context/store'
 
 type Credentials = {
   email: string
@@ -21,9 +22,13 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const { setToken } = useContext(StoreContext)
 
   const loginMutation = useMutation({
     mutationFn: login,
+    onSuccess: (data) => {
+      setToken(data.token)
+    },
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
         setError(error.response.data.message)
