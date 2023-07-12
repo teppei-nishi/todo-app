@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
 type Credentials = {
   email: string
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
       )
     }
 
-    if (user.password !== body.password) {
+    if (bcrypt.compareSync(user.password, body.password)) {
       return NextResponse.json(
         { message: 'メールアドレスかパスワードが間違っています。' },
         { status: 401 }
