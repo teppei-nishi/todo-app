@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
-      user: { id: user.id, email: user.email },
+      user: user,
       token: jwt.sign(user, process.env.JWT_SECRET || '', {
         expiresIn: '1w',
       }),

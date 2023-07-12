@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import bcrypt from 'bcryptjs'
 
 type Credentials = {
   email: string
@@ -37,9 +38,15 @@ export async function POST(request: Request) {
     )
   }
 
+  const salt = bcrypt.genSaltSync(10)
+  const hashedPassword = await bcrypt.hash(body.password, salt)
+
   try {
     await prisma.user.create({
-      data: body,
+      data: {
+        email: body.email,
+        password: hashedPassword,
+      },
     })
     return NextResponse.json({ message: '登録しました。' })
   } catch (error) {
