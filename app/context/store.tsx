@@ -5,8 +5,8 @@ type State = {
     user: null
     token: string | null
     isLoggedIn: boolean
+    setToken: (token: string) => void
   }
-  setToken: (token: string) => void
 }
 
 type Action = {
@@ -19,15 +19,14 @@ const initialState: State = {
     user: null,
     token: null,
     isLoggedIn: false,
+    setToken: () => {},
   },
-  setToken: () => {},
 }
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'SET_TOKEN':
       return {
-        ...state,
         store: {
           ...state.store,
           token: action.payload,
@@ -51,8 +50,10 @@ export const StoreProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
-        ...state,
-        setToken,
+        store: {
+          ...state.store,
+          setToken,
+        },
       }}
     >
       {children}

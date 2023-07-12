@@ -22,12 +22,12 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const { setToken } = useContext(StoreContext)
+  const { store } = useContext(StoreContext)
 
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      setToken(data.token)
+      store.setToken(data.token)
     },
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
