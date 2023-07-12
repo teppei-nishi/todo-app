@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import jwt from 'jsonwebtoken'
 
 type Credentials = {
   email: string
@@ -60,6 +61,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       user: { id: user.id, email: user.email },
+      token: jwt.sign(user, process.env.JWT_SECRET || '', {
+        expiresIn: '1w',
+      }),
     })
   } catch (error) {
     console.error(error)
