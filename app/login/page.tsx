@@ -48,7 +48,7 @@ export default function Login() {
     >
       <Card sx={{ mt: 5 }}>
         <AppBar position="static" elevation={0}>
-          <Toolbar>ログイン</Toolbar>
+          <Toolbar variant="dense">ログイン</Toolbar>
         </AppBar>
         <FormControl sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
           <TextField

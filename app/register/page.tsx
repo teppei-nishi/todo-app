@@ -42,7 +42,7 @@ export default function Register() {
     >
       <Card sx={{ mt: 5 }}>
         <AppBar position="static" elevation={0}>
-          <Toolbar>ユーザー登録</Toolbar>
+          <Toolbar variant="dense">ユーザー登録</Toolbar>
         </AppBar>
         <FormControl sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
           <TextField

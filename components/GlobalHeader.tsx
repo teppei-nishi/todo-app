@@ -15,17 +15,22 @@ export const GlobalHeader: FC = () => {
   const { store } = useContext(StoreContext)
   const router = useRouter()
 
-  const navItems: NavItem[] = []
+  const leftNavItems: NavItem[] = []
+  const rightNavItems: NavItem[] = []
+
+  if (store.isLoggedIn) {
+    leftNavItems.push({ text: '閲覧', href: '/todos' })
+  }
 
   if (!store.isLoggedIn) {
-    navItems.push(
+    rightNavItems.push(
       { text: 'ログイン', href: '/login' },
       { text: 'ユーザー登録', href: '/register' }
     )
   }
 
   if (store.isLoggedIn) {
-    navItems.push({
+    rightNavItems.push({
       text: 'ログアウト',
       onClick: () => {
         store.setToken(null)
@@ -36,12 +41,25 @@ export const GlobalHeader: FC = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <>
       <AppBar>
         <Toolbar>
-          <Typography sx={{ flexGrow: 1 }}>Todo App</Typography>
+          <Typography>Todo App</Typography>
+          <Box sx={{ flexGrow: 1, ml: 2 }}>
+            {leftNavItems.map((item) => (
+              <Button
+                key={item.text}
+                sx={{ color: 'inherit' }}
+                component={item.href ? Link : 'button'}
+                href={item.href ?? undefined}
+                onClick={item.onClick ?? undefined}
+              >
+                {item.text}
+              </Button>
+            ))}
+          </Box>
           <Box>
-            {navItems.map((item) => (
+            {rightNavItems.map((item) => (
               <Button
                 key={item.text}
                 sx={{ color: 'inherit' }}
@@ -55,6 +73,6 @@ export const GlobalHeader: FC = () => {
           </Box>
         </Toolbar>
       </AppBar>
-    </Box>
+    </>
   )
 }
