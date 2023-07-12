@@ -10,11 +10,11 @@ type NavItem = {
 }
 
 export const GlobalHeader: FC = () => {
-  const { isLoggedIn } = useContext(StoreContext)
+  const { store } = useContext(StoreContext)
 
   const navItems: NavItem[] = []
 
-  if (!isLoggedIn) {
+  if (!store.isLoggedIn) {
     navItems.push(
       { text: 'ログイン', href: '/login' },
       { text: 'ユーザー登録', href: '/register' }

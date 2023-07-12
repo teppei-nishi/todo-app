@@ -1,9 +1,11 @@
 import { FC, ReactNode, createContext, useReducer } from 'react'
 
-type Store = {
-  user: null
-  token: string | null
-  isLoggedIn: boolean
+type State = {
+  store: {
+    user: null
+    token: string | null
+    isLoggedIn: boolean
+  }
   setToken: (token: string) => void
 }
 
@@ -12,20 +14,25 @@ type Action = {
   payload: string
 }
 
-const initialState: Store = {
-  user: null,
-  token: null,
-  isLoggedIn: false,
+const initialState: State = {
+  store: {
+    user: null,
+    token: null,
+    isLoggedIn: false,
+  },
   setToken: () => {},
 }
 
-const reducer = (state: Store, action: Action) => {
+const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'SET_TOKEN':
       return {
         ...state,
-        token: action.payload,
-        isLoggedIn: true,
+        store: {
+          ...state.store,
+          token: action.payload,
+          isLoggedIn: true,
+        },
       }
     default:
       return state
