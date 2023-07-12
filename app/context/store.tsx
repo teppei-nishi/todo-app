@@ -2,16 +2,17 @@ import { FC, ReactNode, createContext, useReducer } from 'react'
 
 type State = {
   store: {
-    user: null
+    user: any
     token: string | null
     isLoggedIn: boolean
-    setToken: (token: string) => void
+    setToken: (token: NonNullable<State['store']['token']>) => void
+    setUser: (user: NonNullable<State['store']['user']>) => void
   }
 }
 
 type Action = {
-  type: 'SET_TOKEN'
-  payload: string
+  type: 'SET_TOKEN' | 'SET_USER'
+  payload: NonNullable<State['store']['token'] | State['store']['user']>
 }
 
 const initialState: State = {
@@ -20,6 +21,7 @@ const initialState: State = {
     token: null,
     isLoggedIn: false,
     setToken: () => {},
+    setUser: () => {},
   },
 }
 
@@ -33,6 +35,13 @@ const reducer = (state: State, action: Action) => {
           isLoggedIn: true,
         },
       }
+    case 'SET_USER':
+      return {
+        store: {
+          ...state.store,
+          user: action.payload,
+        },
+      }
     default:
       return state
   }
@@ -43,8 +52,12 @@ export const StoreContext = createContext(initialState)
 export const StoreProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const setToken = (token: string) => {
+  const setToken: State['store']['setToken'] = (token) => {
     dispatch({ type: 'SET_TOKEN', payload: token })
+  }
+
+  const setUser: State['store']['setUser'] = (user) => {
+    dispatch({ type: 'SET_USER', payload: user })
   }
 
   return (
@@ -53,6 +66,7 @@ export const StoreProvider: FC<{ children: ReactNode }> = ({ children }) => {
         store: {
           ...state.store,
           setToken,
+          setUser,
         },
       }}
     >

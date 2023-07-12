@@ -28,6 +28,7 @@ export default function Login() {
     mutationFn: login,
     onSuccess: (data) => {
       store.setToken(data.token)
+      store.setUser(data.user)
     },
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
