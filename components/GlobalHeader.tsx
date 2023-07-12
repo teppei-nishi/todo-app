@@ -1,14 +1,26 @@
 'use client'
+import { StoreContext } from '@/app/context/store'
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 
-const navItems = [
-  { text: 'ログイン', href: '/login' },
-  { text: 'ユーザー登録', href: '/register' },
-]
+type NavItem = {
+  text: string
+  href: string
+}
 
 export const GlobalHeader: FC = () => {
+  const { isLoggedIn } = useContext(StoreContext)
+
+  const navItems: NavItem[] = []
+
+  if (!isLoggedIn) {
+    navItems.push(
+      { text: 'ログイン', href: '/login' },
+      { text: 'ユーザー登録', href: '/register' }
+    )
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar>
