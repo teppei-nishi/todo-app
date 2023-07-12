@@ -5,8 +5,8 @@ type State = {
     user: any
     token: string | null
     isLoggedIn: boolean
-    setToken: (token: NonNullable<State['store']['token']>) => void
-    setUser: (user: NonNullable<State['store']['user']>) => void
+    setToken: (token: State['store']['token']) => void
+    setUser: (user: State['store']['user']) => void
   }
 }
 
@@ -32,7 +32,7 @@ const reducer = (state: State, action: Action) => {
         store: {
           ...state.store,
           token: action.payload,
-          isLoggedIn: true,
+          isLoggedIn: !!action.payload,
         },
       }
     case 'SET_USER':
