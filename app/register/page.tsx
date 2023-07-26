@@ -1,11 +1,11 @@
 'use client'
 import { useState } from 'react'
 import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import axios, { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
-import { AppBar, Card, FormControl, Toolbar, Typography } from '@mui/material'
+import { FormControl, Typography } from '@mui/material'
+import { Panel } from '@/components/Panel'
 
 type Credentials = {
   email: string
@@ -32,18 +32,8 @@ export default function Register() {
   })
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <Card sx={{ mt: 5 }}>
-        <AppBar position="static" elevation={0}>
-          <Toolbar variant="dense">ユーザー登録</Toolbar>
-        </AppBar>
+    <>
+      <Panel title="ユーザー登録" sx={{ mt: 5 }}>
         <FormControl sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
           <TextField
             label="メールアドレス"
@@ -68,7 +58,7 @@ export default function Register() {
             登録
           </Button>
         </FormControl>
-      </Card>
+      </Panel>
       {error && (
         <Typography
           style={{ color: 'red' }}
@@ -76,6 +66,6 @@ export default function Register() {
           dangerouslySetInnerHTML={{ __html: error }}
         />
       )}
-    </Box>
+    </>
   )
 }

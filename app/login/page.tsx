@@ -1,12 +1,12 @@
 'use client'
 import { useContext, useState } from 'react'
 import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import axios, { AxiosError } from 'axios'
 import { useMutation } from '@tanstack/react-query'
-import { AppBar, Card, FormControl, Toolbar, Typography } from '@mui/material'
+import { FormControl, Typography } from '@mui/material'
 import { StoreContext } from '../context/store'
+import { Panel } from '@/components/Panel'
 
 type Credentials = {
   email: string
@@ -38,18 +38,8 @@ export default function Login() {
   })
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <Card sx={{ mt: 5 }}>
-        <AppBar position="static" elevation={0}>
-          <Toolbar variant="dense">ログイン</Toolbar>
-        </AppBar>
+    <>
+      <Panel title="ログイン" sx={{ mt: 5 }}>
         <FormControl sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
           <TextField
             label="メールアドレス"
@@ -74,7 +64,7 @@ export default function Login() {
             ログイン
           </Button>
         </FormControl>
-      </Card>
+      </Panel>
       {error && (
         <Typography
           style={{ color: 'red' }}
@@ -82,6 +72,6 @@ export default function Login() {
           dangerouslySetInnerHTML={{ __html: error }}
         />
       )}
-    </Box>
+    </>
   )
 }
